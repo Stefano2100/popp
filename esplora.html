@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Esplora - Cottage Anticamenta</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+
+/* === BREADCRUMB (POSIZIONE IN ALTO A SINISTRA) === */
+/* === BREADCRUMB (POSIZIONE IN ALTO A SINISTRA) === */
+.breadcrumb {
+    position: fixed;
+    top: 142px; /* Sotto la barra marrone */
+    left: 40px; /* Distanza dal bordo sinistro */
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.8rem;
+    color: #3a2410;
+    z-index: 9999;
+  }
+  
+  .breadcrumb a {
+    color: #3a2410;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .breadcrumb {
+      display: none;
+    }
+  }
+
+
+
+    /* === SCHERMATA INIZIALE (splash screen) === */
+    .splash-screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #3a2410;
+      color: white;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      transition: opacity 1s ease;
+    }
+
+    .splash-screen h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .logo-esplora {
+      width: 60px;
+      height: auto;
+      margin-bottom: 20px;
+      opacity: 0.95;
+      transition: transform 1s ease;
+    }
+
+    /* === BARRA IN ALTO FISSA SU DESKTOP === */
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #3a2410; /* Marrone usato anche nelle altre pagine */
+    color: white;
+    padding: 40px 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    z-index: 9999;
+    text-align: center;
+  }
+  
+  .fixed-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding-top: 20px;
+  }
+  
+  /* Spazio sotto la barra (per non sovrapporsi al resto) */
+  body {
+    padding-top: 120px; /* Altezza della barra */
+  }
+  
+  @media (max-width: 768px) {
+    .fixed-header {
+      padding: 20px 10px;
+      font-size: 1.2rem;
+    }
+  
+    .fixed-header h1 {
+      padding-top: 10px;
+      font-size: 1.2rem;
+    }
+  
+    body {
+      padding-top: 10px;
+    }
+  }
+  
+  
+
+
+    /* === FOTO PRINCIPALE === */
+    
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .splash-screen h1 {
+        font-size: 1.8rem;
+      }
+
+      .main-title {
+        font-size: 2rem;
+        margin-top: 30px;
+      }
+    }
+
+    .logo-sidebar {
+        position: center;
+        left: 30px; /* Distanza dal bordo sinistro */
+        top: 30px; /* Distanza dall'alto */
+        width: 50px; /* Ridotto ma visibile */
+        height: auto;
+        z-index: 1000;
+        opacity: 0.95;
+      }
+      
+      @media (max-width: 768px) {
+        .logo-sidebar {
+          display: none;
+        }
+      }      
+      .photo-wrapper {
+        margin-top: 60px;
+        padding-left: 40px;
+        display: block;
+      }
+
+      .logo-in-header {
+        display: block;
+        width: 40px; /* Ridotto ma visibile */
+        height: auto;
+        margin: -21px auto -19px;
+        opacity: 0.95;
+      }
+      
+      @media (max-width: 768px) {
+        .logo-in-header {
+          display: none;
+        }
+      }
+      /*SCRITTA ESPLORA*/
+      .explorer-tag {
+        display: block; /* Si attiva solo quando scompare lo splash screen */
+        text-align: center;
+        margin-top: 80px; /* Regola questo valore se serve più spazio */
+      
+    }
+      
+      .explorer-tag h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 5.5rem; /* Uguale al titolo principale */
+        color: #3a2410; /* Marrone come la barra */
+        margin: 130;
+       
+      }
+
+      /* === DUE PICCOLE LINEE ESTETICHE SOTTO IN AUTO === */
+    .section-title {
+        text-align: center;
+        position: relative;
+      }
+      
+      .lineetta {
+        height: 2px;
+        background-color: #3a2410;
+        margin: 8px auto 4px;
+        display: block;
+      }
+      
+      .lineetta-top {
+        width: 60px; /* Un po' più lunga */
+        margin-bottom: 4px;
+        margin: -44px auto 2px;
+      }
+      
+      .lineetta-bottom {
+        width: 50px; /* Leggermente più corta */
+      }
+
+      /*SCRITTA SOTTO A ESPLORA*/
+      .explorer-description {
+        text-align: center;
+        margin-top: 30px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+        color: #555;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      @media (max-width: 768px) {
+        .explorer-description {
+          font-size: 0.9rem;
+          padding: 0 20px;
+          margin-top: 20px;
+        }
+      }
+
+      /*QUESTO DEVE RIMANERE*/
+      .main-photo {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+        display: block;
+      }
+      
+      .row-wrapper {
+        display: flex;
+        justify-content: space-between; /* Distribuisce le colonne ai lati */
+        align-items: flex-start;
+        gap: 20px; /* Piccolo spazio tra le colonne */
+        padding: 60px 40px;
+        flex-wrap: wrap; /* Per schermi piccoli */
+      }
+      
+      .column {
+        flex: 1 1 48%; /* Ogni colonna occupa circa il 48% dello spazio */
+        position: relative;
+      }
+      
+      .photo-overlay-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+      
+      .main-photo {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px;
+        display: block;
+      }
+      
+      /* Overlay sopra la foto - sempre visibile */
+      .overlay-text {
+        padding-top: 10px;
+        position: absolute;
+        top: 87%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(58, 36, 16, 0.9); /* Un po' più scuro per migliorare il contrasto */
+        color: white;
+        text-align: left;
+        padding: 20px;
+        width: 90%;
+        max-width: 560px;
+        border-radius: 10px;
+        z-index: 10;
+        opacity: 1;
+      
+        /* Nuovi stili per farlo risaltare sul bianco */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombra morbida */
+        border: 1px solid rgba(255, 255, 255, 0.1); /* Bordo leggero opzionale */
+      }
+      
+      .overlay-text h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        margin-top: -10px; /* Testo più in alto */
+        margin-bottom: 10px;
+      }
+      
+      .overlay-text p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 50px;
+      }
+      
+      .overlay-text button {
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+      
+      .overlay-text button:hover {
+        color: #c79d3b;
+      }
+
+      /* === HOVER SULLA FOTO === */
+/* === EFFETTO HOVER SULLA FOTO === */
+.photo-link {
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+  
+  .photo-link .hover-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%) scale(0.95);
+    color: white;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+    padding: 8px 16px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: 
+      opacity 0.4s ease,
+      transform 0.4s ease;
+    pointer-events: none;
+  }
+  
+  .photo-link:hover .hover-text {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1); /* Effetto zoom + posizionamento centrato */
+  }
+  
+  
+  .photo-link img {
+    transition: filter 0.3s ease;
+  }
+  
+  .photo-link:hover img {
+    filter: blur(2px); /* Effetto sfocatura */
+  }
+  
+ 
+
+/* === BARRA MARRONE IN FONDO - OCCUPA TUTTA LA LARGHEZZA === */
+.bottom-footer {
+    width: 100%;
+    background-color: #3a2410; /* Marrone */
+    height: 250px; /* più alto per spazio */
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: column;      /* disporre verticalmente */
+    justify-content: center;     /* centra verticalmente */
+    align-items: center;         /* centra orizzontalmente */
+    gap: 20px;                   /* spazio tra logo e testo */
+}
+
+.bottom-footer img {
+    height: 50px;                /* dimensione logo */
+    margin: 0;                   /* togli margini strani */
+}
+
+.footer-text {
+    margin-top: 0;
+    text-align: center;          /* testo centrato */
+    color: white;
+}
+
+.footer-text p {
+    margin: 4px 0;               /* margini tra le righe */
+}
+
+
+
+  
+@media only screen and (max-width: 768px) {
+    .row-wrapper {
+        flex-direction: column; /* Impila le colonne verticalmente su schermi piccoli */
+        padding: 20px 0; /* Mantieni un po' di padding per il wrapper */
+        align-items: center; /* Centra gli elementi orizzontalmente quando impilati */
+    }
+
+    .column {
+        flex: 1 1 100%; /* Ogni colonna occupa l'intera larghezza */
+        width: 100%; /* Assicurati che la colonna occupi l'intera larghezza */
+        padding: 0 20px; /* Aggiungi padding orizzontale alle colonne per lo spazio dai bordi dello schermo */
+        box-sizing: border-box; /* Includi il padding nella larghezza totale dell'elemento */
+    }
+
+    .photo-overlay-container {
+        width: 100%; /* Assicurati che il contenitore all'interno della colonna occupi l'intera larghezza disponibile */
+        margin-left: 0; /* Rimuovi i calcoli di margine problematici */
+        margin-right: 0; /* Rimuovi i calcoli di margine problematici */
+    }
+
+    .main-photo {
+        width: 100%; /* Assicurati che l'immagine riempia il suo contenitore */
+        height: auto;
+        display: block;
+    }
+
+    /* Gli altri stili specifici per dispositivi mobili che avevi già e che sono stati consolidati qui */
+    .overlay-text p {
+        margin-top: 1px;
+    }
+
+    .photo-overlay-container h3 {
+        font-size: 16px;
+    }
+
+    .photo-overlay-container p {
+        font-size: 14px;
+    }
+
+    .hover-text {
+        font-size: 6px;
+        padding: 6px 10px;
+    }
+}
+
+  </style>
+</head>
+
+
+<body>
+    <!-- Barra superiore fissa -->
+    <header class="fixed-header">
+        <img src="testa.png" alt="Logo Cottage Anticamenta" class="logo-in-header">
+        <h1>Cottage Anticamenta</h1>
+    </header>
+
+    <!-- Breadcrumb - Scritta sotto la barra marrone -->
+<div class="breadcrumb">
+    <a href="index.html">Cottage Anticamenta</a> / <span>Esplora</span>
+  </div>
+
+    <!-- Scritta Esplora -->
+    <div class="explorer-tag">
+        <h1>Esplora</h1>
+        <div class="lineetta lineetta-top"></div>
+        <div class="lineetta lineetta-bottom"></div>
+    </div>
+
+    <div class="explorer-description">
+        <p>In questa sezione ti consigliamo luoghi incantevoli da visitare vicino a Pietraperzia — tra storia, natura e tradizioni della Sicilia.</p>
+      </div>
+
+  <!-- Schermata iniziale -->
+  <div class="splash-screen" id="splash">
+    <img src="testa.png" alt="Logo Cottage Anticamenta" class="logo-esplora">
+    <h1>Cottage Anticamenta</h1>
+  </div>
+
+
+
+<!-- Contenuto principale: foto affiancate -->
+<main id="main-content" class="main-content">
+<div class="row-wrapper">
+      <!-- Prima foto - Sinistra -->
+<div class="column left-column">
+    <div class="photo-overlay-container">
+      <!-- Link a Google Maps -->
+        <a href="https://maps.app.goo.gl/6wU1pQKCyV2acp7E7" target="_blank" class="photo-link">
+            <img src="Valledeitempli.webp" alt="Valle dei Templi" class="main-photo">
+            <div class="hover-text">Portami lì</div>
+        </a>
+        <div class="overlay-text">
+            <h3>Valle dei templi</h3>
+            <p>La Valle dei Templi di Agrigento è uno straordinario sito archeologico della Magna Grecia, celebre per i suoi templi dorici perfettamente conservati, come il Tempio della Concordia.</p>
+        </div>
+    </div>
+</div>
+  
+  <!-- Seconda foto - Destra -->
+<div class="column right-column">
+    <div class="photo-overlay-container">
+      <!-- Link a Google Maps -->
+      <a href="https://maps.app.goo.gl/rScchi9RL5ppKH748" target="_blank" class="photo-link">
+        <img src="romanacasale.jpg" alt="Romanacasale" class="main-photo">
+        <div class="hover-text">Portami lì</div>
+      </a>
+      <div class="overlay-text">
+        <h3>Villa Romana del Casale</h3>
+        <p>La Villa Romana del Casale, vicino Piazza Armerina, è una residenza imperiale nota per i suoi straordinari mosaici pavimentali ben conservati.
+        </p>
+      </div>
+    </div>
+</div>
+</div>
+
+
+<!-- Nuova riga con foto Scalaturchi -->
+<div class="row-wrapper">
+    <!-- Prima foto - Sinistra -->
+    <div class="column left-column">
+      <div class="photo-overlay-container">
+        <!-- Link a Google Maps -->
+        <a href="https://maps.app.goo.gl/EGxfv1zhJi8yc8Fn8" target="_blank" class="photo-link">
+          <img src="scalaturchi_resized2.jpg" alt="Scalaturchi" class="main-photo">
+          <div class="hover-text">Portami lì</div>
+        </a>
+        <div class="overlay-text">
+          <h3>Scala dei Turchi</h3>
+          <p>La Scala dei Turchi è una scogliera di marna bianca a strapiombo sul mare, vicino Agrigento, famosa per i suoi gradoni naturali e il colore candido.
+        </p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Seconda foto - Destra (esempio con Ragusa) -->
+    <div class="column right-column">
+      <div class="photo-overlay-container">
+        <!-- Link a Google Maps -->
+        <a href="https://maps.app.goo.gl/dukWB3dgGTm26gG67" target="_blank" class="photo-link">
+          <img src="golealcantara_resized.jpg" alt="Ragusa" class="main-photo">
+          <div class="hover-text">Portami lì</div>
+        </a>
+        <div class="overlay-text">
+          <h3>Gole dell'Alcantara</h3>
+          <p>Città barocca ricca di storia, patrimonio UNESCO, con scorci suggestivi e strade che raccontano il passato.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Barra marrone inferiore -->
+<div class="bottom-footer">
+    <img src="whatsapp.png" alt="Logo WhatsApp" />
+    <div class="footer-text">
+        <p>Contrada Menta, Pietraperzia (EN), 94016, Italia</p>
+        <p>Telefono +39 3339739249</p>
+        <p>anticamenta@gmail.com</p>
+        <p>Codice nazionale (CIN): IT086015C29G7CX87U</p>
+        <p>© Cottage Anticamenta 2025</p>
+      </div>
+
+</div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('splash');
+        splash.style.opacity = '0';
+        splash.style.pointerEvents = 'none';
+  
+        setTimeout(() => {
+          splash.style.display = 'none';
+          document.querySelector('.explorer-tag').style.display = 'block';
+          document.getElementById('main-title').style.display = 'block';
+          document.getElementById('main-photo').style.display = 'block';
+        }, 1000); // Tempo dell'animazione
+      }, 4000); // Tempo prima della scomparsa dello splash screen
+    });
+  </script>
+
+</body>
+</html>
