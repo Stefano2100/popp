@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery - Cottage Anticamenta</title>
+  <!-- Google Fonts - Font medievale -->
+  <link href=" https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Font principale per il body */
+body {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Titoli principali come "Cottage Anticamenta", "Galleria Fotografica" */
+  header h1,
+  header p {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+  }
+  
+  /* Titolo "Menu" */
+  aside h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+  }
+  
+  /* Link nel menu laterale */
+  aside ul li a,
+  aside ul li button {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Titoli overlay sulle immagini */
+  .gallery-item .overlay h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.3rem;
+  }
+    /* Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #f5e6d3; /* Sfondo chiaro/beige */
+      color: rgb(51, 51, 51);
+    }
+
+    header {
+      background-color: #3a2410;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #c79d3b;
+    }
+
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      margin-left: 270px; /* Spazio per il menu laterale */
+      margin-top: 100px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-item .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .overlay {
+      opacity: 1;
+    }
+
+    .gallery-item .overlay h2 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    aside {
+      background-color: #3a2410;
+      color: white;
+      padding: 20px;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      overflow-y: auto;
+      box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.3s ease;
+    }
+
+    aside h2 {
+      font-size: 2.4rem;
+      margin-bottom: 43px;
+      color: #c79d3b;
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+    }
+
+    aside ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 10px;
+    }
+
+    aside ul li {
+      margin-bottom: 12px;
+    }
+
+    aside ul li a,
+    aside ul li button {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      display: block;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+    }
+
+    aside ul li a:hover,
+    aside ul li button:hover {
+      color: #c79d3b;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding-left: 16px;
+    }
+
+    .submenu {
+      margin-left: 16px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .has-submenu:hover .submenu {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Separatore tra le voci del menu */
+    aside ul li:not(:last-child)::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.2);
+      margin-top: 8px;
+    }
+
+    /* === HAMBURGER MENU SU MOBILE === */
+    .hamburger {
+      display: none;
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      font-size: 1.8rem;
+      color: #3a2410;
+      z-index: 1000;
+      cursor: pointer;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      aside {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        height: 100%;
+        width: 250px;
+        transition: left 0.3s ease;
+        z-index: 999;
+        padding-top: 60px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      aside.open {
+        left: 0;
+      }
+
+      .close-btn {
+        display: none;
+      }
+
+      aside.open .close-btn {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+      }
+
+      header {
+        padding-top: 20px;
+      }
+
+      .gallery-container {
+        margin-left: 0;
+        padding: 20px 10px;
+      }
+    }
+
+    @media (max-width: 768px) {
+        .gallery-container {
+          margin-top: 20px !important;
+        }
+      }
+
+    /* === HAMBURGER MENU PER MOBILE === */
+.hamburger {
+    display: none;
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    width: 30px;
+    height: 24px;
+    background-color: #3a2410;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    padding: 4px;
+    border-radius: 5px;
+  }
+  
+  .hamburger .line {
+    display: block;
+    width: 100%;
+    height: 4px;
+    margin: 4px 0;
+    background-color: white;
+    border-radius: 2px;
+  }
+  
+  @media (max-width: 768px) {
+    .hamburger {
+      display: block;
+    }
+  
+    aside {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      height: 100%;
+      width: 250px;
+      transition: left 0.3s ease;
+      z-index: 999;
+      padding-top: 60px;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+    }
+  
+    aside.open {
+      left: 0;
+    }
+  
+    .close-btn {
+      display: block;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  /* === HAMBURGER MENU SENZA BACKGROUND SU MOBILE === */
+.hamburger {
+    display: none;
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    z-index: 1000;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .hamburger {
+      display: block;
+    }
+  
+    aside {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      height: 100%;
+      width: 250px;
+      transition: left 0.3s ease;
+      z-index: 999;
+      padding-top: 60px;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+    }
+  
+    aside.open {
+      left: 0;
+    }
+  }
+
+  @media (min-width: 769px) {
+    header {
+      position: absolute;
+      left: 250px; /* Larghezza del menu laterale */
+      top: 0;
+      width: calc(100% - 250px); /* Adatto alla larghezza rimanente */
+      text-align: center;
+      background-color: #3a2410;
+      padding: 20px 0;
+      z-index: 1000;
+    }
+
+    header p {
+        font-size: 1.1rem;
+        color: #f5e6d3;
+      }
+    }
+
+    .site-logo {
+        display: block;
+        width: 40px; /* Piccola dimensione */
+        height: auto;
+        position: absolute;
+        top: 25px; /* Distanza dall'alto */
+        left: 30px; /* Distanza dal bordo sinistro (centrato rispetto al menu) */
+        z-index: 1000;
+        opacity: 0.95;
+      }
+      
+      @media (max-width: 768px) {
+        .site-logo {
+          display: none;
+        }
+      }
+
+      /* === LOGO MOBILE (solo su smartphone) === */
+.logo-mobile-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .logo-mobile {
+    display: none; /* Nascondo di default */
+    width: 60px;
+    height: auto;
+    margin: 0 auto;
+    opacity: 0.95;
+  }
+  
+  /* === MOSTRA IL LOGO MOBILE SOLO QUANDO IL MENU È APERTO === */
+  #mobile-menu.open .logo-mobile {
+    display: block;
+  }
+
+  .site-logo {
+    position: fixed;
+    top: 45px; /* Regola quanto in alto */
+    left: 30px; /* Allineato al menu laterale */
+    width: 40px; /* Dimensione logo */
+    height: auto;
+    z-index: 1000;
+    opacity: 0.95;
+  }
+
+
+  .logo-link {
+    color: white;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+  
+  .logo-link:hover h1,
+  .logo-link:hover p {
+    color: #c79d3b; /* Effetto hover in tema con il resto del sito */
+  }
+
+  .submenu-stanze {
+    display: none;
+  }
+  .submenu-stanze.open {
+    display: block;
+  }
+  
+  
+  
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <!-- Icona hamburger solo su mobile -->
+    <svg class="hamburger" id="hamburger" viewBox="0 0 24 24" width="30px" height="24px" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+      </svg>
+      <a href="CasaAnticamenta.html" class="logo-link">
+        <h1>Cottage Anticamenta</h1>
+        <p>Galleria Fotografica</p>
+      </a>
+  </header>
+
+  <!-- Menu laterale con sottomenu -->
+   <!-- Logo testa.png solo su desktop -->
+
+  <aside id="mobile-menu">
+    
+    <div class="logo-mobile-container">
+        <img src="testa.png" alt="Logo Mobile" class="logo-mobile">
+      </div>
+    
+<button class="close-btn" id="close-btn" style="display: none;">&times;</button>
+
+    <h2>Menu</h2>
+    <ul id="category-menu">
+      <li><a href="#" data-category="all">Tutte Le Foto</a></li>
+      <li><a href="#" data-category="salotto">Salotto</a></li>
+      <li><a href="#" data-category="cucina">Cucina</a></li>
+
+      <!-- Voce principale "Stanze" con sottomenu on hover -->
+      <li class="has-submenu">
+        <a href="#" id="stanze-link">Stanze</a>
+        <ul class="submenu">
+          <li><a href="#" data-category="camera1">Camera 1</a></li>
+          <li><a href="#" data-category="camera2">Camera 2</a></li>
+          <li><a href="#" data-category="camera3">Camera 3</a></li>
+        </ul>
+      </li>
+
+      <li><a href="#" data-category="bagni">Bagni</a></li>
+      <li><a href="#" data-category="esterni">Esterni</a></li>
+      <li><a href="#" data-category="piscina">Piscina</a></li>
+    </ul>
+  </aside>
+
+  <img src="testa.png" alt="Logo Cottage Anticamenta" class="site-logo">
+
+  <!-- Contenuto principale -->
+  <main class="gallery-container" id="gallery-container">
+
+    <!-- Immagini del salotto -->
+    <div class="gallery-item" data-category="all salotto">
+      <img src="salotto/salotto2.avif" alt="Salotto 2">
+      <div class="overlay">
+        <h2>Salotto Accogliente</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all salotto">
+      <img src="salotto/salotto3.avif" alt="Salotto 3">
+      <div class="overlay">
+        <h2>Zona Relax</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all salotto">
+      <img src="salotto/salotto4.avif" alt="Salotto 4">
+      <div class="overlay">
+        <h2>Arredamento Classico</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all salotto">
+      <img src="salotto/salotto5.avif" alt="Salotto 5">
+      <div class="overlay">
+        <h2>Vista d'insieme</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all salotto">
+      <img src="salotto/salotto6.avif" alt="Salotto 6">
+      <div class="overlay">
+        <h2>Dettaglio Finestre</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all salotto">
+      <img src="salotto/salotto7.avif" alt="Salotto 7">
+      <div class="overlay">
+        <h2>Luce Naturale</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all salotto">
+      <img src="salotto/salotto8.avif" alt="Salotto 8">
+      <div class="overlay">
+        <h2>Divano in Pelle</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all salotto">
+      <img src="salotto/salotto9.webp" alt="Salotto 9">
+      <div class="overlay">
+        <h2>Camino e Atmosfera</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all salotto">
+      <img src="salotto/salotto10.webp" alt="Salotto 10">
+      <div class="overlay">
+        <h2>Particolare dei Dettagli</h2>
+      </div>
+    </div>
+
+    <!-- Immagini della cucina -->
+    <div class="gallery-item" data-category="all cucina">
+      <img src="cucina/cucina1.avif" alt="Cucina 1">
+      <div class="overlay">
+        <h2>Cucina Moderna</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all cucina">
+      <img src="cucina/cucina2.avif" alt="Cucina 2">
+      <div class="overlay">
+        <h2>Isola Centrale</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all cucina">
+      <img src="cucina/cucina3.jpg" alt="Cucina 3">
+      <div class="overlay">
+        <h2>Ingresso Camere</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all cucina">
+      <img src="cucina/cucina4.jpg" alt="Cucina 4">
+      <div class="overlay">
+        <h2>Arredi Bianchi</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all cucina">
+      <img src="cucina/cucina5.avif" alt="Cucina 5">
+      <div class="overlay">
+        <h2>Ingresso da Esterno</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all cucina">
+      <img src="cucina/cucina6.avif" alt="Cucina 6">
+      <div class="overlay">
+        <h2>Illuminazione Sottopensile</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all cucina">
+      <img src="cucina/cucina7.avif" alt="Cucina 7">
+      <div class="overlay">
+        <h2>Tavolata e Famiglia</h2>
+      </div>
+    </div>
+
+    <!-- Immagini dei bagni -->
+    <div class="gallery-item" data-category="all bagni">
+      <img src="bagno/bagno1.avif" alt="Bagno 1">
+      <div class="overlay">
+        <h2>Bagno Elegante</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all bagni">
+      <img src="bagno/bagno2.avif" alt="Bagno 2">
+      <div class="overlay">
+        <h2>Vasca e Illuminazione</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all bagni">
+      <img src="bagno/bagno3.jpeg" alt="Bagno 3">
+      <div class="overlay">
+        <h2>Antichità</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all bagni">
+      <img src="bagno/bagno4.avif" alt="Bagno 4">
+      <div class="overlay">
+        <h2>Dettaglio aesthetic</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all bagni">
+      <img src="bagno/bagno5.jpeg" alt="Bagno 5">
+      <div class="overlay">
+        <h2>Spazio Oggettistica</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all bagni">
+      <img src="bagno/bagno6.avif" alt="Bagno 6">
+      <div class="overlay">
+        <h2>Design Raffinato</h2>
+      </div>
+    </div>
+
+    <!-- Immagini dei bagni superiori -->
+    <div class="gallery-item" data-category="all bagni">
+      <img src="bagnosuperiore/bagnosuperiore1.avif" alt="Bagno Superiore 1">
+      <div class="overlay">
+        <h2>Dettaglio Piastrelle</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all bagni">
+      <img src="bagnosuperiore/bagnosuperiore2.jpg" alt="Bagno Superiore 2">
+      <div class="overlay">
+        <h2>Vista dall'alto</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all bagni">
+      <img src="bagnosuperiore/bagnosuperiore3.avif" alt="Bagno Superiore 3">
+      <div class="overlay">
+        <h2>Finestra Panoramica</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all bagni">
+      <img src="bagnosuperiore/bagnosuperiore4.avif" alt="Bagno Superiore 4">
+      <div class="overlay">
+        <h2>Atmosfera Calda</h2>
+      </div>
+    </div>
+
+    <!-- === FOTO CAMERE DA LETTO AGGIUNTE === -->
+
+    <!-- Camera da Letto 1 -->
+    <div class="gallery-item" data-category="all camera1">
+      <img src="cameradaletto1/cameradaletto1.avif" alt="Camera da Letto 1 - Foto 1">
+      <div class="overlay">
+        <h2>Camera 1 - Vista Generale</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all camera1">
+      <img src="cameradaletto1/cameradaletto2.avif" alt="Camera da Letto 1 - Foto 2">
+      <div class="overlay">
+        <h2>Camera 1 - Letto</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all camera1">
+      <img src="cameradaletto1/cameradaletto3.avif" alt="Camera da Letto 1 - Foto 3">
+      <div class="overlay">
+        <h2>Camera 1 - Balcone</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all camera1">
+      <img src="cameradaletto1/cameradaletto4.avif" alt="Camera da Letto 1 - Foto 4">
+      <div class="overlay">
+        <h2>Camera 1 - Arredo</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all camera1">
+      <img src="cameradaletto1/cameradaletto5.avif" alt="Camera da Letto 1 - Foto 5">
+      <div class="overlay">
+        <h2>Camera 1 - Illuminazione</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all camera1">
+      <img src="cameradaletto1/cameradaletto6.jpeg" alt="Camera da Letto 1 - Foto 6">
+      <div class="overlay">
+        <h2>Camera 1 - Dettagli</h2>
+      </div>
+    </div>
+
+    <!-- Camera da Letto 2 -->
+    <div class="gallery-item" data-category="all camera2">
+      <img src="cameradaletto2/cameradaletto1.avif" alt="Camera da Letto 2 - Foto 1">
+      <div class="overlay">
+        <h2>Camera 2 - Ambiente</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all camera2">
+      <img src="cameradaletto2/cameradaletto2.jpeg" alt="Camera da Letto 2 - Foto 2">
+      <div class="overlay">
+        <h2>Camera 2 - Finestra</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all camera2">
+      <img src="cameradaletto2/cameradaletto3.avif" alt="Camera da Letto 2 - Foto 3">
+      <div class="overlay">
+        <h2>Camera 2 - Letto</h2>
+      </div>
+    </div>
+
+    <!-- Camera da Letto 3 -->
+    <div class="gallery-item" data-category="all camera3">
+      <img src="cameradaletto3/cameradaletto1.avif" alt="Camera da Letto 3 - Foto 1">
+      <div class="overlay">
+        <h2>Camera 3 - Luxury Suite</h2>
+      </div>
+    </div>
+
+    <!-- === FOTO ESTERNI (da 1 a 19) === -->
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni1.avif" alt="Esterno 1">
+      <div class="overlay">
+        <h2>Esterno - Vista Generale</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni2.avif" alt="Esterno 2">
+      <div class="overlay">
+        <h2>Esterno - Amaca e Relax</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni3.avif" alt="Esterno 3">
+      <div class="overlay">
+        <h2>Esterno - Piscina anteriore</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni4.avif" alt="Esterno 4">
+      <div class="overlay">
+        <h2>Esterno - Panorama</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni5.jpeg" alt="Esterno 5">
+      <div class="overlay">
+        <h2>Esterno - Flora</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni6.avif" alt="Esterno 6">
+      <div class="overlay">
+        <h2>Esterno - Villetta</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni7.avif" alt="Esterno 7">
+      <div class="overlay">
+        <h2>Esterno - Ingresso</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni8.jpg" alt="Esterno 8">
+      <div class="overlay">
+        <h2>Esterno - Tavolo e famiglia</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni9.jpg" alt="Esterno 9">
+      <div class="overlay">
+        <h2>Esterno - Prato Verde</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni10.avif" alt="Esterno 10">
+      <div class="overlay">
+        <h2>Esterno - Sedimento Rurale</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni11.jpeg" alt="Esterno 11">
+      <div class="overlay">
+        <h2>Esterno - Piscina e bontà</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni12.avif" alt="Esterno 12">
+      <div class="overlay">
+        <h2>Esterno - Work e Relax</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni13.avif" alt="Esterno 13">
+      <div class="overlay">
+        <h2>Esterno - Sdraio in natura</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni14.webp" alt="Esterno 14">
+      <div class="overlay">
+        <h2>Esterno - Alba sul campo</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni15.avif" alt="Esterno 15">
+      <div class="overlay">
+        <h2>Esterno - Zona Relax</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni16.avif" alt="Esterno 16">
+      <div class="overlay">
+        <h2>Esterno - Flora e Piscina</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni17.avif" alt="Esterno 17">
+      <div class="overlay">
+        <h2>Esterno - Sentiero</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni18.avif" alt="Esterno 18">
+      <div class="overlay">
+        <h2>Esterno - Gazzebi e relax</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all esterni">
+      <img src="esterni/esterni19.avif" alt="Esterno 19">
+      <div class="overlay">
+        <h2>Esterno - Serata romantica</h2>
+      </div>
+    </div>
+
+    <!-- === FOTO PISCINA (da 1 a 20) === -->
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina1.avif" alt="Piscina 1">
+      <div class="overlay">
+        <h2>Piscina - Vista Generale</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina2.avif" alt="Piscina 2">
+      <div class="overlay">
+        <h2>Piscina - Adorabile Amaca</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina3.avif" alt="Piscina 3">
+      <div class="overlay">
+        <h2>Piscina - Area Relax</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina4.avif" alt="Piscina 4">
+      <div class="overlay">
+        <h2>Piscina - Vista in pieno pomeriggio</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina5.avif" alt="Piscina 5">
+      <div class="overlay">
+        <h2>Piscina - Piante e piscina</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina6.avif" alt="Piscina 6">
+      <div class="overlay">
+        <h2>Piscina - Acqua Cristallina</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina7.avif" alt="Piscina 7">
+      <div class="overlay">
+        <h2>Piscina - Dettaglio lunghezza</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina8.avif" alt="Piscina 8">
+      <div class="overlay">
+        <h2>Piscina - Merenda e relax</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina9.avif" alt="Piscina 9">
+      <div class="overlay">
+        <h2>Piscina - Vista al Tramonto</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina10.avif" alt="Piscina 10">
+      <div class="overlay">
+        <h2>Piscina - Giornata di sole</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina11.jpg" alt="Piscina 11">
+      <div class="overlay">
+        <h2>Piscina - Viste panoramiche</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina12.avif" alt="Piscina 12">
+      <div class="overlay">
+        <h2>Piscina - Luce interno piscina</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina13.avif" alt="Piscina 13">
+      <div class="overlay">
+        <h2>Piscina - Relax</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina14.avif" alt="Piscina 14">
+      <div class="overlay">
+        <h2>Piscina - Dolcezza della notte</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina15.avif" alt="Piscina 15">
+      <div class="overlay">
+        <h2>Piscina - Panorama alba</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina16.avif" alt="Piscina 16">
+      <div class="overlay">
+        <h2>Piscina - Serata sotto le stelle</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina17.avif" alt="Piscina 17">
+      <div class="overlay">
+        <h2>Piscina - Lettini allineati</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina18.webp" alt="Piscina 18">
+      <div class="overlay">
+        <h2>Piscina - Particolare dell’acqua</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina19.avif" alt="Piscina 19">
+      <div class="overlay">
+        <h2>Piscina - Atmosfera pomeridiana</h2>
+      </div>
+    </div>
+    <div class="gallery-item" data-category="all piscina">
+      <img src="piscina/piscina20.avif" alt="Piscina 20">
+      <div class="overlay">
+        <h2>Piscina - Relax e Salute</h2>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Script per gestire il filtro delle immagini + hamburger menu -->
+  <script>
+    // Ottieni elementi
+    const categoryLinks = document.querySelectorAll('#category-menu a');
+    const galleryItems = document.querySelectorAll('.gallery-container .gallery-item');
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.querySelector('aside');
+    const closeBtn = document.getElementById('close-btn');
+  
+    // Funzione filtro foto
+    function filterGallery(category) {
+      galleryItems.forEach(item => {
+        if (category === 'all' || item.dataset.category.includes(category)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+  
+      // Scroll verso l'alto
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  
+    // Avvia con tutte le foto visibili
+    filterGallery('all');
+  
+    // Gestisci i clic sui link del menu
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+      
+          // Se è il link "Stanze", NON chiudere il menu
+          if (this.id === 'stanze-link') {
+            // Solo toggle del submenu, il tuo altro listener lo gestisce
+            return;
+          }
+      
+          const category = this.getAttribute('data-category');
+          filterGallery(category);
+      
+          // Chiude il menu se è aperto (su mobile)
+          if (mobileMenu && window.innerWidth <= 768) {
+            mobileMenu.classList.remove('open');
+          }
+        });
+      });
+      
+  
+    // Gestisci il click sull'hamburger
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const stanzeLink = document.getElementById('stanze-link');
+        const submenu = document.getElementById('submenu-stanze');
+      
+        // Rileva se sei su dispositivo mobile (modifica la larghezza se vuoi)
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+      
+        if (isMobile) {
+          stanzeLink.addEventListener('click', function(e) {
+            e.preventDefault();     // blocca il link normale
+            e.stopPropagation();    // impedisce la chiusura del menu globale
+      
+            // Toggle visualizzazione submenu
+            if (submenu.style.display === 'block') {
+              submenu.style.display = 'none';
+            } else {
+              submenu.style.display = 'block';
+            }
+          });
+      
+          // Opzionale: cliccando fuori chiudo il submenu
+          document.addEventListener('click', function(e) {
+            if (!submenu.contains(e.target) && e.target !== stanzeLink) {
+              submenu.style.display = 'none';
+            }
+          });
+        }
+      });
+      
+
+
+      
+
+  </script>
+
+</body>
+</html>

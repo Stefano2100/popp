@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dove siamo - Cottage Anticamenta</title>
+
+  <!-- Font medievale -->
+  <link href=" https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+
+ 
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: #fff;
+      color: #333;
+      font-family: 'Georgia', serif;
+      overflow-x: hidden;
+    }
+
+    .static-image {
+      width: 100vw;
+      height: 70vh;
+      background-image: url('piscina1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .bottom-section {
+      width: 100%;
+      padding: 40px 20px;
+      background-color: #3a2410;
+      color: white;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .location-title {
+        font-family: 'Playfair Display', serif;
+  font-weight: 700;
+      font-size: 5rem;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .location-subtitle {
+      font-size: 1.1rem;
+      color: #f5e6d3;
+      display: block;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+      font-family: Georgia, serif;
+      white-space: nowrap;
+    }
+
+    .location-description {
+      max-width: 800px;
+      margin: auto;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #f5e6d3;
+      font-family: Georgia, serif;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .map-container {
+      width: 100vw;
+      height: 70vh;
+      margin-top: 40px;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      overflow: hidden;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Breadcrumb sotto il carosello */
+    .breadcrumb {
+      width: 100%;
+      max-width: 800px;
+      margin: 30px auto -66px;
+      padding: 10px 20px;
+      font-family: Georgia, serif;
+      font-size: 0.9rem;
+      color: #f0e5e5;
+      text-align: left;
+      margin-left: 20px;
+    }
+
+    .breadcrumb a {
+      color: #555;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .breadcrumb a:hover {
+      color: #c79d3b;
+    }
+
+    @media (max-width: 768px) {
+        .breadcrumb {
+          display: none;
+        }
+      }
+
+    /* Sezione IN AUTO */
+    .directions-section {
+      width: 100%;
+      padding: 60px 20px;
+      margin-top: 60px;
+      color: #ffffff;
+      font-family: Georgia, serif;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .directions-text h3 {
+      font-size: 3.5rem;
+      color: #ffffff;
+      margin-bottom: 20px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+    }
+
+    .directions-text p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .directions-img {
+      flex: 1 1 40%;
+      max-width: 400px;
+      opacity: 0;
+      transform: translateX(-10%);
+    }
+
+    .directions-img img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .directions-text {
+      flex: 1 1 50%;
+      max-width: 600px;
+      opacity: 0;
+      transform: translateX(-10%);
+    }
+
+    /* Sezione IN TRENO */
+    .train-section {
+      width: 100%;
+      padding: 60px 20px;
+      margin-top: 0;
+      color: #ffffff;
+      font-family: Georgia, serif;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .train-img {
+      flex: 1 1 40%;
+      max-width: 400px;
+      opacity: 0;
+      transform: translateX(10%);
+    }
+
+    .train-img img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .train-text {
+      flex: 1 1 50%;
+      max-width: 600px;
+      opacity: 0;
+      transform: translateX(10%);
+    }
+
+    .train-text h3 {
+      font-size: 3.5rem;
+      color: #ffffff;
+      margin-bottom: 20px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+    }
+
+    .train-text p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    /* Sezione IN AEREO */
+    .air-section {
+      width: 100%;
+      padding: 60px 20px;
+      margin-top: 0;
+      color: #fffdfd;
+      font-family: Georgia, serif;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .air-text {
+      flex: 1 1 50%;
+      max-width: 600px;
+      opacity: 0;
+      transform: translateX(-10%);
+    }
+
+    .air-text h3 {
+      font-size: 3.5rem;
+      color: #ffffff;
+      margin-bottom: 20px;
+      font-family: 'Playfair Display', serif;
+  font-weight: 600;
+    }
+
+    .air-text p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .air-img {
+      flex: 1 1 40%;
+      max-width: 400px;
+      opacity: 0;
+      transform: translateX(10%);
+    }
+
+    .air-img img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(252, 252, 252, 0.2);
+    }
+
+    /* Effetti di animazione */
+    .animate-left {
+      animation: slideInLeft 1s forwards;
+    }
+
+    .animate-right {
+      animation: slideInRight 1s forwards;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* === DUE PICCOLE LINEE ESTETICHE SOTTO IN AUTO === */
+    .section-title {
+        text-align: center;
+        position: relative;
+      }
+      
+      .lineetta {
+        height: 2px;
+        background-color: #ffffff;
+        margin: 8px auto 4px;
+        display: block;
+      }
+      
+      .lineetta-top {
+        width: 60px; /* Un po' più lunga */
+        margin-bottom: 4px;
+      }
+      
+      .lineetta-bottom {
+        width: 50px; /* Leggermente più corta */
+      }
+
+      .bottom-footer {
+        width: 100%;
+        background-color: #3a2410; /* Marrone */
+        height: 250px; /* più alto per spazio */
+        margin-top: 10px;
+    
+        display: flex;
+        flex-direction: column;      /* disporre verticalmente */
+        justify-content: center;     /* centra verticalmente */
+        align-items: center;         /* centra orizzontalmente */
+        gap: 20px;                   /* spazio tra logo e testo */
+    }
+    
+    .bottom-footer img {
+        height: 50px;                /* dimensione logo */
+        margin: 0;                   /* togli margini strani */
+    }
+    
+    .footer-text {
+        margin-top: 0;
+        text-align: center;          /* testo centrato */
+        color: white;
+    }
+    
+    .footer-text p {
+        margin: 4px 0;               /* margini tra le righe */
+    }
+      
+
+    @media (max-width: 768px) {
+        /* Per auto e aereo, testo prima e immagine dopo => invertiamo con column-reverse */
+        .directions-section,
+        .air-section {
+          display: flex;
+          flex-direction: column-reverse; /* immagine sopra, testo sotto */
+          align-items: center;
+          padding: 40px 10px;
+        }
+      
+        /* Per treno, immagine prima e testo dopo => manteniamo column normale */
+        .train-section {
+          display: flex;
+          flex-direction: column; /* immagine sopra, testo sotto */
+          align-items: center;
+          padding: 40px 10px;
+        }
+      
+        /* Stile comune per testo e immagini */
+        .directions-text,
+        .train-text,
+        .air-text,
+        .directions-img,
+        .train-img,
+        .air-img {
+          flex: none;
+          max-width: 100%;
+          width: 100%;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      
+        /* Spaziatura sotto immagine */
+        .directions-img,
+        .train-img,
+        .air-img {
+          margin-bottom: 20px;
+        }
+      }
+      
+      
+      
+      
+      
+      
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Immagine fissa grande -->
+  <div class="static-image"></div>
+
+  <!-- Navigazione breadcrumb -->
+  <div class="breadcrumb">
+    <a href="CasaAnticamenta.html">Cottage Anticamenta</a> / Dove siamo
+  </div>
+
+  <!-- Sezione con descrizione -->
+  <div class="bottom-section">
+    <div class="location-title">Dove siamo</div>
+    
+    <div class="location-subtitle">
+      Cottage Anticamenta si trova nel cuore della Sicilia, in un paesino chiamato Pietraperzia.
+    </div>
+
+    <div class="location-description">
+      Nel silenzio dorato delle colline siciliane arroccato tra uliveti secolari e campi di grano antico sorge Pietraperzia un borgo incantato che sembra uscito da un racconto del passato. Proprio qui immerso tra le dolci onde della natura incontaminata nasce Cottage Anticamenta un angolo di pace dove il tempo sembra essersi fermato. Costruito con pietra locale e travi a vista questo piccolo gioiello è nato dal recupero di un’antica dimora rurale rispettando l’architettura tradizionale dell’entroterra siciliano. Ogni dettaglio racconta storia arte e ospitalità muri in pietra archi a tutto sesto un patio fiorito e una vista senza fine sui monti Erei. Da qui puoi esplorare la vera Sicilia borghi autentici mercati colorati strade di ciottoli e tramonti che tingono il cielo di rosso acceso. A pochi chilometri da Enna la città di velluto e vicinissimo alle antiche rovine di Morgantina Anticamenta non è solo un posto dove dormire è un viaggio nel cuore dell’isola più vera.
+    </div>
+
+    <!-- Mappa Google -->
+    <div class="map-container">
+      <iframe 
+        src=" https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12675.862006304851!2d14.1722165!3d37.4142903!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1310e6d5f087202d%3A0xbf38dc553c7243c8!2sCasa%20Anticamenta%20%2F%20Locazione%20Turistica!5e0!3m2!1sit!2sit!4v1750986168425!5m2!1sit!2sit"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+    <!-- Sezione In Auto -->
+    <section class="directions-section">
+      <div class="directions-text" id="autoText">
+        <h3>IN AUTO</h3>
+        <!-- === DUE LINEE ESTETICHE SOTTO "IN AUTO" === -->
+        <div class="lineetta lineetta-top"></div>
+        <div class="lineetta lineetta-bottom"></div>
+        <p>
+          Da Palermo: segui l’autostrada A19 in direzione Catania, esci a Enna e prosegui per Contrada Menta seguendo le indicazioni per Pietraperzia.
+        </p>
+        <p>
+          Da Catania: prendi l’autostrada A18 o A19 verso Palermo, esci a Enna e continua in direzione Pietraperzia – Contrada Menta.
+        </p>
+        <p>
+          Da Messina: percorri l’A20 fino a Catania, poi segui le indicazioni per Enna e Contrada Menta.
+        </p>
+        <p>
+          Una volta giunti a Pietraperzia, seguite le indicazioni per Contrada Menta. Il Cottage si trova in posizione tranquilla e panoramica, facilmente raggiungibile con qualsiasi tipo di veicolo.
+        </p>
+      </div>
+
+      <div class="directions-img" id="autoImg">
+        <img src="auto.png" alt="Come arrivare in auto">
+      </div>
+    </section>
+
+    <!-- Sezione In Treno -->
+    <section class="train-section">
+      <div class="train-img" id="trainImg">
+        <img src="treno.png" alt="Come arrivare in treno">
+      </div>
+
+      <div class="train-text" id="trainText">
+        <h3>IN TRENO</h3>
+        <div class="lineetta lineetta-top"></div>
+        <div class="lineetta lineetta-bottom"></div>
+        <p>
+          La stazione ferroviaria più vicina è quella di Caltanissetta Centrale (o Xirbi). Arrivando in treno, puoi prenotare un taxi o noleggiare un'auto presso i servizi locali per raggiungerci comodamente.
+        </p>
+        <p>
+          Una volta scesi dalla banchina, ti consigliamo di contattarci per aiutarti nell’organizzazione del trasporto finale oppure usa Google Maps per seguire il percorso migliore.
+        </p>
+      </div>
+    </section>
+
+    <!-- Sezione In Aereo -->
+    <section class="air-section">
+      <div class="air-text" id="airText">
+        <h3>IN AEREO</h3>
+        <div class="lineetta lineetta-top"></div>
+        <div class="lineetta lineetta-bottom"></div>
+        <p>
+          L’aeroporto più vicino è Catania – Fontanarossa (Aeroporto Internazionale di Catania), il principale scalo della Sicilia orientale.
+        </p>
+        <p>
+          Per chi arriva dall’esterno dell’Italia o da altre regioni italiane, atterra a Catania e noleggia un’auto o prenota un transfer privato per raggiungerci comodamente.
+        </p>
+        <p>
+          Il nostro alloggio dista circa 40 minuti di auto. In alternativa puoi prendere il treno fino a Caltanissetta o Enna e proseguire con un taxi.
+        </p>
+        <p>
+          Usa Google Maps per seguire il percorso ideale dal momento in cui lasci l’aeroporto.
+        </p>
+      </div>
+
+      <div class="air-img" id="airImg">
+        <img src="aereo.png" alt="Come arrivare in aereo">
+      </div>
+    </section>
+
+  </div>
+
+  <div class="bottom-footer">
+    <img src="whatsapp.png" alt="Logo WhatsApp" />
+    <div class="footer-text">
+        <p>Contrada Menta, Pietraperzia (EN), 94016, Italia</p>
+        <p>Telefono +39 3339739249</p>
+        <p>anticamenta@gmail.com</p>
+        <p>Codice nazionale (CIN): IT086015C29G7CX87U</p>
+        <p>© Cottage Anticamenta 2025</p>
+      </div>
+
+</div>
+
+  <script>
+    // Animazione quando le sezioni entrano nella viewport
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-left'); // Testo entra da sinistra
+        }
+      });
+    }, { threshold: 0.2 });
+
+    const observerRight = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-right'); // Foto entra da destra
+        }
+      });
+    }, { threshold: 0.2 });
+
+    // Applica animazione alle sezioni testo
+    observer.observe(document.getElementById('autoText'));
+    observer.observe(document.getElementById('trainText'));
+    observer.observe(document.getElementById('airText'));
+
+    // Applica animazione alle immagini
+    observerRight.observe(document.getElementById('autoImg'));
+    observerRight.observe(document.getElementById('trainImg'));
+    observerRight.observe(document.getElementById('airImg'));
+  </script>
+
+</body>
+</html>
